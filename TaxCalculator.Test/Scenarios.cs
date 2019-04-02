@@ -50,7 +50,7 @@ namespace TaxCalculator.Test
                 new Item(11.25m, "box of imported chocolates", true, true)
             };
 
-            const string exepcted = "1 imported bottle of perfume: 27.99 1 bottle of perfume: 18.99 1 packet of paracetemol: 9.75 1 box of imported chocolates: 11.25 Sales Taxes: 6.70 Total: 74.68";
+            const string exepcted = "1 imported bottle of perfume: 27.99 1 bottle of perfume: 18.99 1 packet of paracetemol: 9.75 1 box of imported chocolates: 11.25 Sales Taxes: 6.7 Total: 74.68";
 
             Assert.Contains(exepcted, Sut.GetReceipt(requestedItem));
         }
