@@ -15,8 +15,13 @@ namespace TaxCalculator
 
         public string GetReceipt(IList<Item> items)
         {
+            var totalPrice = items.Select(item => item.Price).Sum();
+            var totalTax = items.Select(item => _TaxCalculator.GetSalesTax(item)).Sum();
+
             var result = string.Join(" ", items.Select(x => x.Display)).Trim();
-            result += $" Sales Taxes: {items.Select(item => _TaxCalculator.GetSalesTax(item)).Sum()}";
+            result += $" Sales Taxes: {totalTax}";
+            result += $" Total: {totalPrice+totalTax}";
+
             return result;
         }
     }

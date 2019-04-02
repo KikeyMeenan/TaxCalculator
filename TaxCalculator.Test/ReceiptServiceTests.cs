@@ -44,6 +44,14 @@ namespace TaxCalculator.Test
         }
 
         [Fact]
+        public void GivenItemIsProvided_WhenReceiptIsRequested_ThenTotalIsReturned()
+        {
+            var requestedItem = new List<Item>() { new Item(100m, "some name") };
+
+            Assert.Contains("Total: 110", Sut.GetReceipt(requestedItem));
+        }
+
+        [Fact]
         public void GivenTaxExemptItemProvided_WhenReceiptIsRequested_ThenSalesTaxIsNotApplied()
         {
             var requestedItem = new List<Item>() { new Item(100m, "some name", true) };
