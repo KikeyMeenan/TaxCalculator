@@ -10,7 +10,11 @@
             var totalITemTax = 0m;
             if (!item.IsTaxExempt)
             {
-                totalITemTax = item.Price / BaseTax;
+                totalITemTax = (BaseTax / 100) * item.Price;
+            }
+            if (item.IsImported)
+            {
+                totalITemTax += (ImportTax / 100) * item.Price;
             }
             return totalITemTax;
         }

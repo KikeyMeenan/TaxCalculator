@@ -50,5 +50,21 @@ namespace TaxCalculator.Test
 
             Assert.Contains("Sales Taxes: 0", Sut.GetReceipt(requestedItem));
         }
+
+        [Fact]
+        public void GivenImportedTaxExemptItemProvided_WhenReceiptIsRequested_ThenImportTaxOnlyIsApplied()
+        {
+            var requestedItem = new List<Item>() { new Item(100m, "some name", true, true) };
+
+            Assert.Contains("Sales Taxes: 5", Sut.GetReceipt(requestedItem));
+        }
+
+        [Fact]
+        public void GivenImportedTaxableItemProvided_WhenReceiptIsRequested_ThenImportTaxAndBaseTaxAreApplied()
+        {
+            var requestedItem = new List<Item>() { new Item(100m, "some name", false, true) };
+
+            Assert.Contains("Sales Taxes: 15", Sut.GetReceipt(requestedItem));
+        }
     }
 }
