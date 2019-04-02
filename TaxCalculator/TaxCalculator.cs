@@ -12,13 +12,13 @@ namespace TaxCalculator
             var totalItemTax = 0m;
             if (!item.IsTaxExempt)
             {
-                totalItemTax = Math.Round(((BaseTax * item.Price) / 100) * 20) / 20;
+                totalItemTax = BaseTax * item.Price / 100;
             }
             if (item.IsImported)
             {
-                totalItemTax += Math.Round(((ImportTax * item.Price) / 100) * 20) / 20;
+                totalItemTax += ImportTax * item.Price / 100;
             }
-            return totalItemTax;
+            return Math.Ceiling(totalItemTax * 20) / 20;
         }
     }
 
