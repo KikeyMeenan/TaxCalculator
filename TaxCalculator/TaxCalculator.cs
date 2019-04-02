@@ -1,4 +1,6 @@
-﻿namespace TaxCalculator
+﻿using System;
+
+namespace TaxCalculator
 {
     public class TaxCalculator : ITaxCalculator
     {
@@ -7,16 +9,16 @@
 
         public decimal GetSalesTax(Item item)
         {
-            var totalITemTax = 0m;
+            var totalItemTax = 0m;
             if (!item.IsTaxExempt)
             {
-                totalITemTax = (BaseTax / 100) * item.Price;
+                totalItemTax = Math.Round(((BaseTax * item.Price) / 100) * 20) / 20;
             }
             if (item.IsImported)
             {
-                totalITemTax += (ImportTax / 100) * item.Price;
+                totalItemTax += Math.Round(((ImportTax * item.Price) / 100) * 20) / 20;
             }
-            return totalITemTax;
+            return totalItemTax;
         }
     }
 
