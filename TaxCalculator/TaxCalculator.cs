@@ -1,13 +1,18 @@
 ﻿namespace TaxCalculator
 {
-    public class TaxCalculator: ITaxCalculator
+    public class TaxCalculator : ITaxCalculator
     {
         const decimal BaseTax = 10;
         const decimal ImportTax = 5;
 
         public decimal GetSalesTax(Item item)
         {
-            return item.Price/BaseTax;
+            var totalITemTax = 0m;
+            if (!item.IsTaxExempt)
+            {
+                totalITemTax = item.Price / BaseTax;
+            }
+            return totalITemTax;
         }
     }
 

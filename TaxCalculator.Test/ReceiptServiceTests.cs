@@ -3,10 +3,10 @@ using Xunit;
 
 namespace TaxCalculator.Test
 {
-    public class ReceiptTests
+    public class ReceiptServiceTests
     {
         ReceiptService Sut;
-        public ReceiptTests()
+        public ReceiptServiceTests()
         {
             Sut = new ReceiptService(new TaxCalculator());
         }
@@ -14,8 +14,8 @@ namespace TaxCalculator.Test
         [Fact]
         public void GivenAnItemIsProvided_WhenReceiptIsRequested_ThenReturnItemNameAndPriceInReceipt()
         {
-            var requestedItem = new List<Item>() { new Item(100m, "some name")};
-            
+            var requestedItem = new List<Item>() { new Item(100m, "some name") };
+
             Assert.Contains("1 some name: 100", Sut.GetReceipt(requestedItem));
         }
 
@@ -23,7 +23,7 @@ namespace TaxCalculator.Test
         public void GivenManyItemsAreProvided_WhenReceiptIsRequested_ThenReturnAllItemsInReceipt()
         {
             var requestedItem = new List<Item>() { new Item(100m, "some name"), new Item(200m, "some other name") };
-            
+
             Assert.Contains("1 some name: 100 1 some other name: 200", Sut.GetReceipt(requestedItem));
         }
 
@@ -36,11 +36,19 @@ namespace TaxCalculator.Test
         }
 
         [Fact]
-        public void GivenItemsAreProvided_WhenReceiptIsRequested_ThenSalesTaxIsApplied()
+        public void GivenNonTaxExemptItemIsProvided_WhenReceiptIsRequested_ThenSalesTaxIsApplied()
         {
             var requestedItem = new List<Item>() { new Item(100m, "some name") };
 
             Assert.Contains("Sales Taxes: 10", Sut.GetReceipt(requestedItem));
+        }
+
+        [Fact]
+        public void GivenTaxExemptItemProvided_WhenReceiptIsRequested_ThenSalesTaxIsNotApplied()
+        {
+            var requestedItem = new List<Item>() { new Item(100m, "some name", true) };
+
+            Assert.Contains("Sales Taxes: 0", Sut.GetReceipt(requestedItem));
         }
     }
 }
